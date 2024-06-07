@@ -2,7 +2,7 @@ package bst
 
 // Node represents a node in the binary search tree.
 type Node struct {
-	Data  int
+	Data  int64
 	Left  *Node
 	Right *Node
 }
@@ -18,21 +18,21 @@ func (bst *BST) Balance() {
 	bst.Root = balance(bst.Root)
 }
 
-func (bst *BST) Delete(data int) {
+func (bst *BST) Delete(data int64) {
 	bst.Root = delete(bst.Root, data)
 }
 
-func (bst *BST) Height() int {
+func (bst *BST) Height() int64 {
 	return height(bst.Root)
 }
 
-func (bst *BST) InOrder() []int {
-	var result []int
+func (bst *BST) InOrder() []int64 {
+	var result []int64
 	inOrder(bst.Root, &result)
 	return result
 }
 
-func (bst *BST) Insert(data int) {
+func (bst *BST) Insert(data int64) {
 	if bst.Root == nil {
 		bst.Root = &Node{Data: data}
 	} else {
@@ -48,8 +48,8 @@ func (bst *BST) IsBST() bool {
 	return isBST(bst.Root, nil, nil)
 }
 
-func (bst *BST) LevelOrder() []int {
-	var result []int
+func (bst *BST) LevelOrder() []int64 {
+	var result []int64
 	queue := []*Node{bst.Root}
 	for len(queue) > 0 {
 		node := queue[0]
@@ -63,37 +63,37 @@ func (bst *BST) LevelOrder() []int {
 	return result
 }
 
-func (bst *BST) Max() int {
+func (bst *BST) Max() int64 {
 	return findMax(bst.Root).Data
 }
 
-func (bst *BST) Min() int {
+func (bst *BST) Min() int64 {
 	return findMin(bst.Root).Data
 }
 
-func (bst *BST) PostOrder() []int {
-	var result []int
+func (bst *BST) PostOrder() []int64 {
+	var result []int64
 	postOrder(bst.Root, &result)
 	return result
 }
 
-func (bst *BST) PreOrder() []int {
-	var result []int
+func (bst *BST) PreOrder() []int64 {
+	var result []int64
 	preOrder(bst.Root, &result)
 	return result
 }
 
-func (bst *BST) Search(data int) bool {
+func (bst *BST) Search(data int64) bool {
 	return search(bst.Root, data)
 }
 
-func (bst *BST) Size() int {
+func (bst *BST) Size() int64 {
 	return size(bst.Root)
 }
 
 // Private Methods
 
-func abs(a int) int {
+func abs(a int64) int64 {
 	if a < 0 {
 		return -a
 	}
@@ -114,7 +114,7 @@ func balance(node *Node) *Node {
 			node.Left = rotateLeft(node.Left)
 			node = rotateRight(node)
 		}
-	} else if balanceFactor < -1 {
+	} else if balanceFactor < int64(-1) {
 		if height(node.Right.Right) >= height(node.Right.Left) {
 			node = rotateLeft(node)
 		} else {
@@ -125,7 +125,7 @@ func balance(node *Node) *Node {
 	return node
 }
 
-func delete(node *Node, data int) *Node {
+func delete(node *Node, data int64) *Node {
 	if node == nil {
 		return nil
 	}
@@ -161,7 +161,7 @@ func findMin(node *Node) *Node {
 	return node
 }
 
-func height(node *Node) int {
+func height(node *Node) int64 {
 	if node == nil {
 		return 0
 	}
@@ -173,7 +173,7 @@ func height(node *Node) int {
 	return rightHeight + 1
 }
 
-func inOrder(node *Node, result *[]int) {
+func inOrder(node *Node, result *[]int64) {
 	if node != nil {
 		inOrder(node.Left, result)
 		*result = append(*result, node.Data)
@@ -181,7 +181,7 @@ func inOrder(node *Node, result *[]int) {
 	}
 }
 
-func insert(node *Node, data int) {
+func insert(node *Node, data int64) {
 	if data < node.Data {
 		if node.Left == nil {
 			node.Left = &Node{Data: data}
@@ -219,7 +219,7 @@ func isBST(node *Node, minNode *Node, maxNode *Node) bool {
 	return isBST(node.Left, minNode, node) && isBST(node.Right, node, maxNode)
 }
 
-func postOrder(node *Node, result *[]int) {
+func postOrder(node *Node, result *[]int64) {
 	if node != nil {
 		postOrder(node.Left, result)
 		postOrder(node.Right, result)
@@ -227,7 +227,7 @@ func postOrder(node *Node, result *[]int) {
 	}
 }
 
-func preOrder(node *Node, result *[]int) {
+func preOrder(node *Node, result *[]int64) {
 	if node != nil {
 		*result = append(*result, node.Data)
 		preOrder(node.Left, result)
@@ -249,7 +249,7 @@ func rotateRight(node *Node) *Node {
 	return newNode
 }
 
-func search(node *Node, data int) bool {
+func search(node *Node, data int64) bool {
 	if node == nil {
 		return false
 	}
@@ -262,7 +262,7 @@ func search(node *Node, data int) bool {
 	return search(node.Right, data)
 }
 
-func size(node *Node) int {
+func size(node *Node) int64 {
 	if node == nil {
 		return 0
 	}
